@@ -20,8 +20,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.models import load_model
-translate = ['cane', 'cavallo', 'elefante',  'farfalla',  'female' , 'gallina', 'gatto','male', 'mucca', 'pecora', 'ragno', 'random' ,'scoiattolo']
-
+translate = ["DOG", "HORSE", "ELEPHANT", "BUTTERFLY",'FEMALE', "CHICKEN", "CAT",'MALE', "COW", "SHEEP", "SPIDER",'RANDOM' , "SQUIRREL"]
 
 
 from flask import Flask, jsonify, send_from_directory, url_for
