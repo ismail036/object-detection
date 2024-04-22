@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animal Classifier</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"
+    defer></script>
+</head>
+
+<body class="bg-dark">
+
+
+  <nav class="navbar navbar-expand fixed-top" style="background-color: rgb(33, 33, 33); position: relative;">
+    <div class="container-fluid">
+      <a class="navbar-brand text-white" href="index.html">Animal Classfier</a>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active text-white-50" aria-current="page" href="/index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white-50" href="/about.html">About</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link  text-white-50" href="/members.html">
+              Members
+            </a>
+          </li>
+      </div>
+    </div>
+  </nav>
+
+
+  <div id="imagePreview" style="color: white;">
+  </div>
+
+
+  <div id="center-form" style="background-color: white;">
+    <form id="imageForm" enctype="multipart/form-data">
+      <input type="file" id="imageInput" accept="image/*" required>
+      <button type="submit">Yükle</button>
+    </form>
+
+  </div>
+
+
+  <script>
+    const formm = document.getElementById('imageForm');
+    const input = document.getElementById('imageInput');
+
+    var objectType = ""
+
+    formm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const formData = new FormData();
+        formData.append('file', input.files[0]);
+
+        try {
+            const response = await fetch('/upload', {
+                method: 'POST',
+                body: formData
+            });
+            
+            const data = await response.json();
+            console.log(data['type']);
+            objectType = data['type']
+            console.log(objectType)
+            document.getElementById('type').innerHTML = objectType;
+            
+        } catch (error) {
+            console.error('Hata:', error);
+        }
+    });
+</script>
+
+
+
+  <script>
+
+
+    
+
+
+
+
+    function goToMember(classname) {
+      window.location.href = "members.html#" + classname;
+    }
+    // Merkex div seç
+    const centerdiv = document.getElementById('center-form');
+    // Formu seç
+    const form = document.getElementById('imageForm');
+    // Resim giriş alanını seç
+    const imageInput = document.getElementById('imageInput');
+    // Resim önizleme alanını seç
+    const imagePreview = document.getElementById('imagePreview');
+    const header1 = document.getElementById('h2ex');
+    const about1 = document.getElementById('pex');
+
+    // Form gönderildiğinde
+    form.addEventListener('submit', function (event) {
+      event.preventDefault(); // Sayfanın yeniden yüklenmesini önle
+
+      // Formdan resmi al
+      const image = imageInput.files[0];
+      if (image) {
+        // Resim varsa önizleme göster
+        centerdiv.style.display = 'none';
+
+        // Başlık ve açıklama ekleyerek görüntüyü göster
+        const title = objectType; // İstediğiniz başlık
+        const description = 'Bu resim güzel bir manzarayı gösteriyor.'; // İstediğiniz açıklama
+        showImageWithText(image, title, description);
+      } else {
+        alert('Lütfen bir resim seçin.');
+      }
+    });
+
+    // Resmi gösteren fonksiyon
+    function showImageWithText(file, title, description) {
+      const reader = new FileReader();
+
+      reader.onload = function (event) {
+        const imgElement = document.createElement('img');
+        imgElement.src = event.target.result;
+        imgElement.alt = file.name;
+        imagePreview.innerHTML = ''; // Clear previous content of imagePreview
+        imagePreview.appendChild(imgElement);// Yeni resmi ekle
+
+        // Başlık ve açıklama ekleyerek görüntüyü göster
+        const titleElement = document.createElement('h3');
+        titleElement.textContent = title;
+        titleElement.id = 'type'
+        const descriptionElement = document.createElement('p');
+        descriptionElement.textContent = description;
+
+        imagePreview.appendChild(titleElement); // Başlık ekle
+        imagePreview.appendChild(descriptionElement); // Açıklama ekle
+      };
+
+      reader.readAsDataURL(file); // Resmi oku
+    }
+
+
+  </script>
+</body>
+
+</html>

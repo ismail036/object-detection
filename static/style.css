@@ -1,0 +1,69 @@
+#center-form {
+    position: fixed;
+    /* Fixed position so it doesn't scroll with the page */
+    top: 50%;
+    /* Position from the top 50% of the viewport */
+    left: 50%;
+    /* Position from the left 50% of the viewport */
+    transform: translate(-50%, -50%);
+    /* Translate the div back by half its width and height */
+}
+
+
+.center-members {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+.text-group-center {
+    color: white;
+    text-align: center;
+}
+
+
+.team-member img {
+    width: 50%;
+    transform: translate(50%);
+    text-align: center;
+
+}
+
+.team-member h2 {
+    color: white;
+    margin-top: 20px;
+    font-size: 20px;
+}
+
+.team-member b {
+    padding: 0 20px;
+    font-size: 18px;
+    color: #818181;
+}
+
+.team-member hr {
+    color: white;
+}
+
+.team-member p {
+    padding: 0 20px;
+    font-size: 16px;
+    color: #666;
+}
+
+#imagePreview {
+    width: 60000px; /* Örnek bir genişlik değeri */
+    height: fit-content; /* Örnek bir yükseklik değeri */
+    margin-left: 40%;
+    margin-top: 50px;
+    overflow: hidden;
+}
+
+#imagePreview img {
+    width: 200px;
+    height: 200px;
+    position: relative;
+    height: auto;
+    
+}
+
